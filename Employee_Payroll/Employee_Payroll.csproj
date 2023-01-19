@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Delete.png" />
+    <None Remove="Images\Edit.png" />
+    <None Remove="Images\Ellipse -1.png" />
+    <None Remove="Images\Ellipse -2.png" />
+    <None Remove="Images\Ellipse -3.png" />
+    <None Remove="Images\Ellipse -4.png" />
+    <None Remove="Images\pro.png" />
+    <None Remove="Images\Seach.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\Edit.png" />
+    <Resource Include="Images\Ellipse -1.png" />
+    <Resource Include="Images\Ellipse -2.png" />
+    <Resource Include="Images\Ellipse -3.png" />
+    <Resource Include="Images\Ellipse -4.png" />
+    <Resource Include="Images\pro.png" />
+    <Resource Include="Images\Seach.png" />
+  </ItemGroup>
+
+</Project>
