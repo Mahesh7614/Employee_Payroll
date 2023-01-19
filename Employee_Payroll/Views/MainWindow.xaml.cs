@@ -93,12 +93,12 @@ namespace Employee_Payroll
                             command.Parameters.AddWithValue("@Gender", GenderMenu.Text);
                             command.Parameters.AddWithValue("@Department", string.Join(",", selected_Departemnts));
                             command.Parameters.AddWithValue("@Salary", Salary_Value.Text);
-                            command.Parameters.AddWithValue("@Date", start_Date);
+                            command.Parameters.AddWithValue("@Start_Date", start_Date);
                             command.Parameters.AddWithValue("@Notes", Notes_txt.Text);
 
                             command.ExecuteNonQuery();
-                            connection.Close();
                             MessageBox.Show("User Added Successfully", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+                            connection.Close();
                             Clear();
                             Dashboard dashboard = new Dashboard();
                             this.Close();

@@ -30,7 +30,7 @@
             <ComboBoxItem Content="Female" FontSize="14"/>
         </ComboBox>
         <Label x:Name="Department" Content="Department" HorizontalAlignment="Center" Height="27" Margin="0,217,0,0" VerticalAlignment="Top" Width="90" FontSize="14"/>
-        <ListBox x:Name="Department_List" Height="40" Margin="262,215,0,0" Width="362" IsSynchronizedWithCurrentItem="True" VerticalContentAlignment="Bottom" BorderThickness="0,0,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+        <ListBox x:Name="Department_List" Height="43" Margin="262,217,0,0" Width="362" IsSynchronizedWithCurrentItem="True" VerticalContentAlignment="Bottom" BorderThickness="0,0,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left">
             <CheckBox x:Name="HR" Content="HR" UseLayoutRounding="True" Height="15" Margin="0,4,0,0"/>
             <CheckBox x:Name="Sales" Content="Sales" Margin="120,-24,0,0" Height="15"/>
             <CheckBox x:Name="Finanace" Content="Finance" Margin="45,-33,0,0" Height="15"/>
