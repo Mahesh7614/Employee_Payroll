@@ -20,8 +20,8 @@
         <RadioButton x:Name="a_radio" Content="../Images/Ellipse -1.png" HorizontalAlignment="Left" Height="20" Margin="262,138,0,0" VerticalAlignment="Top" Width="20"/>
         <RadioButton x:Name="b_radio" Content="../Images/Ellipse -2.png" HorizontalAlignment="Left" Height="20" Margin="330,138,0,0" VerticalAlignment="Top" Width="20"/>
         <Image x:Name="Image2" HorizontalAlignment="Left" Height="35" Margin="345,126,0,0" VerticalAlignment="Top" Width="38" Source="../Images/Ellipse -2.png"/>
-        <RadioButton x:Name="c_radio" Content="../Images/Ellipse -3.png" HorizontalAlignment="Left" Height="20" Margin="395,138,0,0" VerticalAlignment="Top" Width="20" Grid.ColumnSpan="2"/>
-        <Image x:Name="Image3" HorizontalAlignment="Left" Height="35" Margin="0,126,0,0" VerticalAlignment="Top" Width="38" Source="../Images/Ellipse -3.png" Grid.Column="1"/>
+        <RadioButton x:Name="c_radio" Content="../Images//Ellipse -3.png" HorizontalAlignment="Left" Height="20" Margin="395,138,0,0" VerticalAlignment="Top" Width="20" Grid.ColumnSpan="2"/>
+        <Image x:Name="Image3" HorizontalAlignment="Left" Height="35" Margin="0,126,0,0" VerticalAlignment="Top" Width="38" Source="../Images//Ellipse -3.png" Grid.Column="1"/>
         <RadioButton x:Name="d_radio" Content="../Images/Ellipse -4.png" HorizontalAlignment="Left" Height="19" Margin="55,138,0,0" VerticalAlignment="Top" Width="20" Grid.Column="1"/>
         <Image x:Name="Image4" HorizontalAlignment="Right" Height="35" Margin="0,126,275,0" VerticalAlignment="Top" Width="38" Source="../Images/Ellipse -4.png" Grid.Column="1"/>
         <Label x:Name="Gender" Content="Gender" HorizontalAlignment="Left" Height="31" Margin="162,175,0,0" VerticalAlignment="Top" Width="62" FontSize="14"/>

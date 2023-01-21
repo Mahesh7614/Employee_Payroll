@@ -68,6 +68,11 @@ namespace Employee_Payroll
                 MessageBox.Show("Salary cannot be Zero", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
+            if (Day_Combo.Text == String.Empty && Month_Combo.Text == String.Empty && Year_Combo.Text == String.Empty)
+            {
+                MessageBox.Show("Please Select Start Date", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
             return true;
         }
 
@@ -96,14 +101,72 @@ namespace Employee_Payroll
                             command.Parameters.AddWithValue("@Start_Date", start_Date);
                             command.Parameters.AddWithValue("@Notes", Notes_txt.Text);
 
-                            command.ExecuteNonQuery();
-                            MessageBox.Show("User Added Successfully", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+                            int addOrNot = command.ExecuteNonQuery();
+                            if (addOrNot >= 1)
+                            {
+                                MessageBox.Show("User Added Successfully", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("User Name Already Exists!", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                             connection.Close();
                             Clear();
-                            Dashboard dashboard = new Dashboard();
                             this.Close();
+                            Dashboard dashboard = new Dashboard();
+                            dashboard.LoadGrid();
+                            dashboard.Show();
                         }
                         catch (SqlException ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (IsValid())
+                {
+                    string start_Date = Day_Combo.Text + "-" + Month_Combo.Text + "-" + Year_Combo.Text;
+                    var selected_Departemnts = Department_List.Items.Cast<CheckBox>().Where(x => x.IsChecked == true).Select(x => x.Content).ToList();
+                    using (connection)
+                    {
+                        try
+                        {
+                            SqlCommand command = new SqlCommand("SPUpdateEmployee", connection);
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            connection.Open();
+                            command.Parameters.AddWithValue("@EmpID", EmpID);
+                            command.Parameters.AddWithValue("@Name", Name_txt.Text);
+                            command.Parameters.AddWithValue("@Profile", profile_Link);
+                            command.Parameters.AddWithValue("@Gender", GenderMenu.Text);
+                            command.Parameters.AddWithValue("@Department", string.Join(",", selected_Departemnts));
+                            command.Parameters.AddWithValue("@Salary", Salary_Value.Text);
+                            command.Parameters.AddWithValue("@Start_Date", start_Date);
+                            command.Parameters.AddWithValue("@Notes", Notes_txt.Text);
+
+                            command.ExecuteNonQuery();
+                            MessageBox.Show("Updated User Data Successfully", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            connection.Close();
+
+                            Clear();
+                            this.Close();
+                            Dashboard dashboard = new Dashboard();
+                            dashboard.LoadGrid();
+                            dashboard.Show();
+                        }
+                        catch (SqlException ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message);
                         }
@@ -121,6 +184,8 @@ namespace Employee_Payroll
         {
             Dashboard dashboard = new Dashboard();
             this.Close();
+            dashboard.LoadGrid();
+            dashboard.Show();
         }
         private void Radio_Checked(object sender, RoutedEventArgs e)
         {

@@ -5,23 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Employee_Payroll.Views"
         mc:Ignorable="d"
-        Title="Dashboard" Height="450" Width="800">
+        Title="Dashboard" Height="450" Width="830">
     <Grid>
 
         <Rectangle HorizontalAlignment="Center" Height="60" Stroke="white" VerticalAlignment="Top" Width="1920"/>
-        <Image HorizontalAlignment="Left" Height="52" Margin="38,6,0,0" VerticalAlignment="Top" Width="128" Source="/Views/pro.png"/>
-        <Button Content="+ Add User" HorizontalAlignment="Left" Height="29" Margin="675,60,0,0" VerticalAlignment="Top" Width="115" FontSize="16" Background="#FF05791B" Foreground="#FFF8F5F5"/>
+        <Image HorizontalAlignment="Left" Height="52" Margin="38,6,0,0" VerticalAlignment="Top" Width="128" Source="../Images/pro.png"/>
+        <Button x:Name="AddUser" Content="+ Add User" HorizontalAlignment="Left" Height="29" Margin="675,60,0,0" VerticalAlignment="Top" Width="115" FontSize="16" Background="#FF05791B" Foreground="#FFF8F5F5" Click="Add_User"/>
         <Label Content="Employee Details" HorizontalAlignment="Left" Height="29" Margin="42,60,0,0" VerticalAlignment="Top" Width="140" FontSize="16" FontWeight="Bold" Foreground="#FF03236A"/>
-        <Ellipse HorizontalAlignment="Left" Height="29" Margin="614,60,0,0" Stroke="White" VerticalAlignment="Top" Width="44" Fill="#FFD7D6D6"/>
         <Image HorizontalAlignment="Left" Height="17" Margin="630,66,0,0" VerticalAlignment="Top" Width="18" Source="/Views/Seach.png" Visibility="Collapsed"/>
-        <DataGrid HorizontalAlignment="Center" Height="290" Margin="0,105,0,0" VerticalAlignment="Top" Width="766" d:ItemsSource="{d:SampleData ItemCount=0}" SelectionChanged="DataGrid_SelectionChanged_1" AutoGenerateColumns="False" FontWeight="Bold" Background="#FFF0F0F0" IsTextSearchEnabled="True" AreRowDetailsFrozen="True">
+        <DataGrid x:Name="EmployeeDataGrid" FontSize="14" Height="290" Margin="0,105,0,0" VerticalAlignment="Top" Width="766" FontWeight="Bold" AutoGenerateColumns="False" Background="#FFF0F0F0" IsTextSearchEnabled="True">
             <DataGrid.Columns>
-                <DataGridTextColumn FontWeight="Bold" FontSize="14" Header="Name" IsReadOnly="True" Width="250"/>
-                <DataGridTextColumn FontWeight="Bold" FontSize="14" Header="Gender" Width="70"/>
-                <DataGridTextColumn FontWeight="Bold" FontSize="14" Header="Department" Width="150"/>
-                <DataGridTextColumn FontWeight="Bold" FontSize="14" Header="Salary" Width="120"/>
-                <DataGridTextColumn FontWeight="Bold" FontSize="14" Header="Start Date" Width="80"/>
-                <DataGridTextColumn FontWeight="Bold" FontSize="14" Header="Actions" Width="70"/>
+                <DataGridTextColumn x:Name="ID" Header="ID" Visibility="Hidden" Binding="{Binding EmpID}"/>
+                <DataGridTemplateColumn Header=" " Width="*" MinWidth="30" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Profile}" Height="20"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn FontSize="12" Header="Name" Width="200" Binding="{Binding Name}"/>
+                <DataGridTextColumn FontSize="12" Header="Gender" Width="70" Binding="{Binding Gender}"/>
+                <DataGridTextColumn FontSize="12" Header="Department" Width="160" Binding="{Binding Department}"/>
+                <DataGridTextColumn FontSize="12" Header="Salary" Width="100" Binding="{Binding Salary}"/>
+                <DataGridTextColumn FontSize="12" Header="Start Date" Width="90" Binding="{Binding Start_Date}"/>
+                <DataGridTextColumn Header="Notes" Visibility="Hidden" Binding="{Binding Notes}"/>
+                <DataGridTemplateColumn Header="Actions" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Background="White" BorderThickness="0" Click="DeleteEvent">
+                                    <Image Source="../Images/Delete.png" Height="25" Width="20"/>
+                                </Button>
+                                <Button Background="White" BorderThickness="0" Click="EditEvent">
+                                    <Image Source="../Images/Edit.png" Height="25" Width="20"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
