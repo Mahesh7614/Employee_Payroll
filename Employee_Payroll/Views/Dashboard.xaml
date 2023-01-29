@@ -5,31 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Employee_Payroll.Views"
         mc:Ignorable="d"
-        Title="Dashboard" Height="450" Width="830">
-    <Grid>
-
-        <Rectangle HorizontalAlignment="Center" Height="60" Stroke="white" VerticalAlignment="Top" Width="1920"/>
-        <Image HorizontalAlignment="Left" Height="52" Margin="38,6,0,0" VerticalAlignment="Top" Width="128" Source="../Images/pro.png"/>
-        <Button x:Name="AddUser" Content="+ Add User" HorizontalAlignment="Left" Height="29" Margin="675,60,0,0" VerticalAlignment="Top" Width="115" FontSize="16" Background="#FF05791B" Foreground="#FFF8F5F5" Click="Add_User"/>
+        Title="Dashboard" Height="450" Width="830"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    <Window.Resources>
+        <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="SizeWE"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="DataGridColumnHeaderStyle1" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Background" Value="#42515F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Grid>
+                            <theme:DataGridHeaderBorder Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" IsPressed="{TemplateBinding IsPressed}" IsHovered="{TemplateBinding IsMouseOver}" IsClickable="{TemplateBinding CanUserSort}" Padding="{TemplateBinding Padding}" SortDirection="{TemplateBinding SortDirection}" SeparatorVisibility="{TemplateBinding SeparatorVisibility}" SeparatorBrush="{TemplateBinding SeparatorBrush}">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </theme:DataGridHeaderBorder>
+                            <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource ColumnHeaderGripperStyle}"/>
+                            <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Style="{StaticResource ColumnHeaderGripperStyle}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FFCFCFCF">
+        <Button x:Name="AddUser" Content="+ Add User" HorizontalAlignment="Left" Height="29" Margin="675,63,0,0" VerticalAlignment="Top" Width="115" FontSize="16" Background="#82A70C" Foreground="#FFF8F5F5" Click="Add_User" Padding="1,1,1,1" BorderThickness="0,0,0,0"/>
         <Label Content="Employee Details" HorizontalAlignment="Left" Height="29" Margin="42,60,0,0" VerticalAlignment="Top" Width="140" FontSize="16" FontWeight="Bold" Foreground="#FF03236A"/>
         <Image HorizontalAlignment="Left" Height="17" Margin="630,66,0,0" VerticalAlignment="Top" Width="18" Source="/Views/Seach.png" Visibility="Collapsed"/>
-        <DataGrid x:Name="EmployeeDataGrid" FontSize="14" Height="290" Margin="0,105,0,0" VerticalAlignment="Top" Width="766" FontWeight="Bold" AutoGenerateColumns="False" Background="#FFF0F0F0" IsTextSearchEnabled="True">
+        <DataGrid ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" x:Name="EmployeeDataGrid" FontSize="12" Height="304" Margin="32,105,40,0" VerticalAlignment="Top" AutoGenerateColumns="False" Background="White" ColumnHeaderHeight="32" RowHeight="30" FontFamily="Arial" FontWeight="Bold" GridLinesVisibility="Horizontal" CanUserResizeColumns="False" CanUserResizeRows="False" BorderThickness="0,0,0,0" >
+            <DataGrid.RowStyle>
+                <Style/>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="ID" Header="ID" Visibility="Hidden" Binding="{Binding EmpID}"/>
                 <DataGridTemplateColumn Header=" " Width="*" MinWidth="30" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding Profile}" Height="20"/>
+                            <Image Source="{Binding Profile}" Height="30"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn FontSize="12" Header="Name" Width="200" Binding="{Binding Name}"/>
-                <DataGridTextColumn FontSize="12" Header="Gender" Width="70" Binding="{Binding Gender}"/>
-                <DataGridTextColumn FontSize="12" Header="Department" Width="160" Binding="{Binding Department}"/>
-                <DataGridTextColumn FontSize="12" Header="Salary" Width="100" Binding="{Binding Salary}"/>
-                <DataGridTextColumn FontSize="12" Header="Start Date" Width="90" Binding="{Binding Start_Date}"/>
+                <DataGridTextColumn FontSize="12" Header="NAME" Width="200" Binding="{Binding Name}"/>
+                <DataGridTextColumn FontSize="12" Header="GENDER" Width="70" Binding="{Binding Gender}"/>
+                <DataGridTextColumn FontSize="12" Header="DEPARTMENT" Width="160" Binding="{Binding Department}" Foreground="DarkBlue"/>
+                <DataGridTextColumn x:Name="Dep" Header="SALARY" Width="100" Binding="{Binding Salary}"/>
+                <DataGridTextColumn FontSize="12" Header="START DATE" Width="90" Binding="{Binding Start_Date}"/>
                 <DataGridTextColumn Header="Notes" Visibility="Hidden" Binding="{Binding Notes}"/>
-                <DataGridTemplateColumn Header="Actions" Width="80">
+                <DataGridTemplateColumn Header="ACTIONS" Width="65">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -45,6 +78,9 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Border BorderBrush="White" HorizontalAlignment="Center" Height="55" VerticalAlignment="Top" Width="830" OpacityMask="White" Background="White">
+            <Image HorizontalAlignment="Left" Height="52" Margin="36,6,0,0" VerticalAlignment="Top" Width="128" Source="../Images/pro.png"/>
+        </Border>
 
     </Grid>
 </Window>

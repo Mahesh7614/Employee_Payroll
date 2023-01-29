@@ -6,30 +6,33 @@
         xmlns:local="clr-namespace:Employee_Payroll"
         mc:Ignorable="d"
         Title="MainWindow" Height="485" Width="808">
-    <Grid RenderTransformOrigin="0.527,0.523" Margin="0,0,0,3">
+    <Grid RenderTransformOrigin="0.527,0.523" Margin="0,0,0,3" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="415*"/>
             <ColumnDefinition Width="386*"/>
         </Grid.ColumnDefinitions>
         <Image x:Name="Employee_Payroll" HorizontalAlignment="Left" Height="52" Margin="30,6,0,0" VerticalAlignment="Top" Width="128" Source="../Images/pro.png"/>
-        <Label x:Name="Employee_Payroll_Form" Content="Employee Payroll Form" HorizontalAlignment="Left" Height="37" Margin="162,30,0,0" VerticalAlignment="Top" Width="182" FontWeight="Bold" Foreground="#FF340376" FontSize="16"/>
+        <Label x:Name="Employee_Payroll_Form" Content="Employee Payroll Form" HorizontalAlignment="Left" Height="37" Margin="162,30,0,0" VerticalAlignment="Top" Width="182" FontWeight="Bold" Foreground="#42515F" FontSize="16"/>
         <Label x:Name="Name" Content="Name" HorizontalAlignment="Left" Height="27" Margin="162,84,0,0" VerticalAlignment="Top" Width="49" FontSize="14"/>
         <TextBox x:Name="Name_txt" HorizontalAlignment="Left" Height="27" Margin="262,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="488" FontSize="14" Grid.ColumnSpan="2"/>
         <Label x:Name="Profile" Content="Profile" HorizontalAlignment="Left" Height="27" Margin="162,130,0,0" VerticalAlignment="Top" Width="49" FontSize="14"/>
         <Image x:Name="Image1" HorizontalAlignment="Left" Height="35" Margin="280,126,0,0" VerticalAlignment="Top" Width="38" Source="../Images/Ellipse -1.png"/>
-        <RadioButton x:Name="a_radio" Content="../Images/Ellipse -1.png" HorizontalAlignment="Left" Height="20" Margin="262,138,0,0" VerticalAlignment="Top" Width="20"/>
-        <RadioButton x:Name="b_radio" Content="../Images/Ellipse -2.png" HorizontalAlignment="Left" Height="20" Margin="330,138,0,0" VerticalAlignment="Top" Width="20"/>
+        <RadioButton x:Name="a_radio" Content="../Images/Ellipse -1.png" HorizontalAlignment="Left" Height="20" Margin="262,138,0,0" VerticalAlignment="Top" Width="20" Checked="Radio_Checked"/>
+        <RadioButton x:Name="b_radio" Content="../Images/Ellipse -2.png" HorizontalAlignment="Left" Height="20" Margin="330,138,0,0" VerticalAlignment="Top" Width="20" Checked="Radio_Checked"/>
         <Image x:Name="Image2" HorizontalAlignment="Left" Height="35" Margin="345,126,0,0" VerticalAlignment="Top" Width="38" Source="../Images/Ellipse -2.png"/>
-        <RadioButton x:Name="c_radio" Content="../Images//Ellipse -3.png" HorizontalAlignment="Left" Height="20" Margin="395,138,0,0" VerticalAlignment="Top" Width="20" Grid.ColumnSpan="2"/>
-        <Image x:Name="Image3" HorizontalAlignment="Left" Height="35" Margin="0,126,0,0" VerticalAlignment="Top" Width="38" Source="../Images//Ellipse -3.png" Grid.Column="1"/>
-        <RadioButton x:Name="d_radio" Content="../Images/Ellipse -4.png" HorizontalAlignment="Left" Height="19" Margin="55,138,0,0" VerticalAlignment="Top" Width="20" Grid.Column="1"/>
+        <RadioButton x:Name="c_radio" Content="../Images/Ellipse -3.png" HorizontalAlignment="Left" Height="20" Margin="395,138,0,0" VerticalAlignment="Top" Width="20" Checked="Radio_Checked"/>
+        <Image x:Name="Image3" HorizontalAlignment="Left" Height="35" Margin="0,126,0,0" VerticalAlignment="Top" Width="38"  Grid.Column="1" Source="../Images/Ellipse -3.png"/>
+        <RadioButton x:Name="d_radio" Content="../Images/Ellipse -4.png" HorizontalAlignment="Left" Height="19" Margin="55,138,0,0" VerticalAlignment="Top" Width="20" Grid.Column="1" Checked="Radio_Checked"/>
         <Image x:Name="Image4" HorizontalAlignment="Right" Height="35" Margin="0,126,275,0" VerticalAlignment="Top" Width="38" Source="../Images/Ellipse -4.png" Grid.Column="1"/>
         <Label x:Name="Gender" Content="Gender" HorizontalAlignment="Left" Height="31" Margin="162,175,0,0" VerticalAlignment="Top" Width="62" FontSize="14"/>
         <ComboBox x:Name="GenderMenu" HorizontalAlignment="Left" Height="27" Margin="262,175,0,0" VerticalAlignment="Top" Width="95" FontSize="14" Tag="">
             <ComboBoxItem Content="Male" FontSize="14"/>
             <ComboBoxItem Content="Female" FontSize="14"/>
         </ComboBox>
-        <Label x:Name="Department" Content="Department" HorizontalAlignment="Center" Height="27" Margin="0,217,0,0" VerticalAlignment="Top" Width="90" FontSize="14"/>
+        <Label x:Name="Department" Content="Department" HorizontalAlignment="Center" Height="33" VerticalAlignment="Center" Width="90" FontSize="14"/>
         <ListBox x:Name="Department_List" Height="43" Margin="262,217,0,0" Width="362" IsSynchronizedWithCurrentItem="True" VerticalContentAlignment="Bottom" BorderThickness="0,0,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left">
             <CheckBox x:Name="HR" Content="HR" UseLayoutRounding="True" Height="15" Margin="0,4,0,0"/>
             <CheckBox x:Name="Sales" Content="Sales" Margin="120,-24,0,0" Height="15"/>
@@ -38,9 +41,9 @@
             <CheckBox x:Name="Others" Content="Others" Margin="250,-50,0,0" Height="15"/>
         </ListBox>
         <Label x:Name="Salary" Content="Salary" HorizontalAlignment="Left" Height="27" Margin="162,249,0,0" VerticalAlignment="Top" Width="49" FontSize="14"/>
-        <Slider x:Name="SalarySlider" HorizontalAlignment="Left" Margin="262,260,0,0" VerticalAlignment="Top" Width="326" Maximum="500000" TickFrequency="50000" IsSnapToTickEnabled="True" Grid.ColumnSpan="2"/>
+        <Slider x:Name="SalarySlider" HorizontalAlignment="Left" Margin="262,260,0,0" VerticalAlignment="Top" Width="326" Maximum="500000" TickFrequency="50000" IsSnapToTickEnabled="True" Grid.ColumnSpan="2" Height="18"/>
         <Label x:Name="Start_Date_Combo" Content="Start Date" HorizontalAlignment="Left" Height="28" Margin="162,285,0,0" VerticalAlignment="Top" Width="80" FontSize="14"/>
-        <ComboBox x:Name="Day_Combo" HorizontalAlignment="Left" Height="23" Margin="262,285,0,0" VerticalAlignment="Top" Width="60" FontSize="14">
+        <ComboBox x:Name="Day_Combo" HorizontalAlignment="Left" Height="23" Margin="262,285,0,0" VerticalAlignment="Top" Width="60" FontSize="14" BorderThickness="1,1,1,1" Background="White" BorderBrush="White" Foreground="Black">
             <ComboBoxItem Content="1"/>
             <ComboBoxItem Content="2"/>
             <ComboBoxItem Content="3"/>
@@ -73,7 +76,7 @@
             <ComboBoxItem Content="30"/>
             <ComboBoxItem Content="31"/>
         </ComboBox>
-        <ComboBox x:Name="Month_Combo" HorizontalAlignment="Left" Height="23" Margin="355,285,0,0" VerticalAlignment="Top" Width="100" FontSize="14" Grid.ColumnSpan="2">
+        <ComboBox x:Name="Month_Combo" HorizontalAlignment="Left" Height="23" Margin="355,285,0,0" VerticalAlignment="Top" Width="81" FontSize="14" Grid.ColumnSpan="2">
             <ComboBoxItem Content="JAN"/>
             <ComboBoxItem Content="FEB"/>
             <ComboBoxItem Content="MAR"/>
@@ -87,7 +90,7 @@
             <ComboBoxItem Content="NOV"/>
             <ComboBoxItem Content="DEC"/>
         </ComboBox>
-        <ComboBox x:Name="Year_Combo" HorizontalAlignment="Left" Height="23" Margin="78,285,0,0" VerticalAlignment="Top" Width="100" FontSize="14" Grid.Column="1">
+        <ComboBox x:Name="Year_Combo" HorizontalAlignment="Left" Height="23" Margin="55,285,0,0" VerticalAlignment="Top" Width="87" FontSize="14" Grid.Column="1">
             <ComboBoxItem Content="2011"/>
             <ComboBoxItem Content="2012"/>
             <ComboBoxItem Content="2013"/>
@@ -105,10 +108,10 @@
         </ComboBox>
         <Label x:Name="Notes" Content="Notes" HorizontalAlignment="Left" Height="25" Margin="162,320,0,0" VerticalAlignment="Top" Width="80" FontSize="14"/>
         <TextBox x:Name="Notes_txt" HorizontalAlignment="Left" Height="57" Margin="262,320,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="488" FontSize="14" Grid.ColumnSpan="2"/>
-        <Button x:Name="Cancel_button" Content="Cancel" HorizontalAlignment="Left" Height="38" Margin="162,388,0,0" VerticalAlignment="Top" Width="95" FontSize="14" Click="Cancel_button_Click"/>
+        <Button x:Name="Cancel_button" Content="Cancel" HorizontalAlignment="Center" Height="38" Margin="0,388,0,0" VerticalAlignment="Top" Width="95" FontSize="14" Click="Cancel_button_Click"/>
         <Button x:Name="Reset_Button" Content="Reset" HorizontalAlignment="Left" Height="38" Margin="240,388,0,0" VerticalAlignment="Top" Width="95" FontSize="14" Grid.Column="1" Click="Reset_Button_Click"/>
         <Button x:Name="Submit_Button" Content="Submit" HorizontalAlignment="Left" Height="38" Margin="85,388,0,0" VerticalAlignment="Top" Width="95" FontSize="14" Grid.Column="1" Click="Submit_Button_Click"/>
-        <TextBox x:Name="Salary_Value" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="206,249,0,0" TextWrapping="Wrap" Text="{Binding ElementName=SalarySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="129" FontSize="14"/>
+        <TextBox x:Name="Salary_Value" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="194,249,0,0" TextWrapping="Wrap" Text="{Binding ElementName=SalarySlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="111" FontSize="14"/>
 
     </Grid>
 </Window>

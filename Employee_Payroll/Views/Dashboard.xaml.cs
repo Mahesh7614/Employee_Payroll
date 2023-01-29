@@ -1,9 +1,8 @@
 ﻿
+using Employee_Payroll.Model;
+using Employee_Payroll.View_Model;
 using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Windows;
-
 
 namespace Employee_Payroll.Views
 {
@@ -17,16 +16,17 @@ namespace Employee_Payroll.Views
             InitializeComponent();
             LoadGrid();
         }
-        SqlConnection connection = new SqlConnection(@"Server=localhost;Database=Employee_Payroll_Services;User ID=MAHESH/Mahesh;Password=;TrustServerCertificate=True;integrated security=SSPI;");
+        Dashboards dashboards = new Dashboards();
         public void LoadGrid()
         {
-            SqlCommand command = new SqlCommand("Select EmpID,Name,Profile,Gender,Department,Salary,Start_Date,Notes from Employee_Payroll_Table", connection);
-            DataTable table = new DataTable();
-            connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            table.Load(reader);
-            connection.Close();
-            EmployeeDataGrid.ItemsSource = table.DefaultView;
+            try
+            {
+                EmployeeDataGrid.ItemsSource = dashboards.GetAllEmployee();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Add_User(object sender, RoutedEventArgs e)
@@ -37,36 +37,45 @@ namespace Employee_Payroll.Views
         }
         private void DeleteEvent(object sender, RoutedEventArgs e)
         {
-            DataRowView data = (DataRowView)EmployeeDataGrid.SelectedItem;
-            MessageBoxResult result = MessageBox.Show("Are you sure?", "Datete Conformation", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
+            try
             {
-                SqlCommand command = new SqlCommand("SPDeleteEmployee", connection);
-                command.CommandType = CommandType.StoredProcedure;
-                connection.Open();
-                command.Parameters.AddWithValue("@EmpID", data["EmpID"]);
-                command.ExecuteNonQuery();
-                connection.Close();
-                LoadGrid();
+                EmployeeModel data = (EmployeeModel)EmployeeDataGrid.SelectedItem;
+                MessageBoxResult result = MessageBox.Show("Are you sure?", "Datete Conformation", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    dashboards.DeleteEmployee(data.EmpID);
+                    LoadGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
         private void EditEvent(object sender, RoutedEventArgs e)
         {
-            DataRowView data = (DataRowView)EmployeeDataGrid.SelectedItem;
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Name_txt.Text = data["Name"].ToString();
-            mainWindow.GenderMenu.Text = data["Gender"].ToString();
-            mainWindow.Salary_Value.Text = data["Salary"].ToString();
-            string fullDate = data["Start_Date"].ToString();
-            string[] start_date = fullDate.Split("-");
-            mainWindow.Day_Combo.Text = start_date[0];
-            mainWindow.Month_Combo.Text = start_date[1];
-            mainWindow.Year_Combo.Text = start_date[2];
-            mainWindow.Notes_txt.Text = data["Notes"].ToString();
-            mainWindow.EmpID = Convert.ToInt32(data["EmpID"]);
-            mainWindow.isUpdate= true;
-            this.Close();
-            mainWindow.Show();
+            try
+            {
+                EmployeeModel data = (EmployeeModel)EmployeeDataGrid.SelectedItem;
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Name_txt.Text = data.Name;
+                mainWindow.GenderMenu.Text = data.Gender;
+                mainWindow.Salary_Value.Text = data.Salary;
+                string fullDate = data.Start_Date;
+                string[] start_date = fullDate.Split("-");
+                mainWindow.Day_Combo.Text = start_date[0];
+                mainWindow.Month_Combo.Text = start_date[1];
+                mainWindow.Year_Combo.Text = start_date[2];
+                mainWindow.Notes_txt.Text = data.Notes;
+                mainWindow.EmpID = data.EmpID;
+                mainWindow.isUpdate = true;
+                this.Close();
+                mainWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

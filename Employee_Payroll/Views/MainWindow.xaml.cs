@@ -1,7 +1,8 @@
-﻿using Employee_Payroll.Views;
+﻿using Employee_Payroll.Model;
+using Employee_Payroll.View_Model;
+using Employee_Payroll.Views;
 using System;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,11 +18,27 @@ namespace Employee_Payroll
         {
             InitializeComponent();
         }
-        public string profile_Link = "";
+        MainWindows mainWindows = new MainWindows();
         public bool isUpdate = false;
         public int EmpID;
-        SqlConnection connection = new SqlConnection(@"Server=localhost;Database=Employee_Payroll_Services;User ID=MAHESH/Mahesh;Password=;TrustServerCertificate=True;integrated security=SSPI;");
+        public EmployeeModel Data()
+        {
+            var selected_Departemnts = Department_List.Items.Cast<CheckBox>().Where(x => x.IsChecked == true).Select(x => x.Content).ToList();
+            string start_Date = Day_Combo.Text + "-" + Month_Combo.Text + "-" + Year_Combo.Text;
 
+            EmployeeModel model = new EmployeeModel()
+            {
+                EmpID = EmpID,
+                Name = Name_txt.Text,
+                Profile = mainWindows.profile_Link,
+                Gender = GenderMenu.Text,
+                Department = string.Join(",", selected_Departemnts),
+                Salary = SalarySlider.Value.ToString(),
+                Start_Date = start_Date,
+                Notes = Notes_txt.Text,
+            };
+            return model;
+        }
         public void Clear()
         {
             Name_txt.Clear();
@@ -41,135 +58,46 @@ namespace Employee_Payroll
             Month_Combo.Text = "";
             Year_Combo.Text = "";
         }
-        public bool IsValid()
-        {
-            if (Name_txt.Text == String.Empty)
-            {
-                MessageBox.Show("Name Field is Required.", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            if (a_radio.IsChecked == false && b_radio.IsChecked == false && c_radio.IsChecked == false && d_radio.IsChecked == false)
-            {
-                MessageBox.Show("Profile Image is not selected \nPlease Select Profile Image.", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            if (HR.IsChecked == false && Finanace.IsChecked == false && Sales.IsChecked == false && Engineer.IsChecked == false && Others.IsChecked == false)
-            {
-                MessageBox.Show("Department is not Selected \nPlease Select Departments ", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            if (GenderMenu.Text == String.Empty)
-            {
-                MessageBox.Show("Gender is not Selected \nPlease Select Gender", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            if (SalarySlider.Value == 0)
-            {
-                MessageBox.Show("Salary cannot be Zero", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            if (Day_Combo.Text == String.Empty && Month_Combo.Text == String.Empty && Year_Combo.Text == String.Empty)
-            {
-                MessageBox.Show("Please Select Start Date", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-            return true;
-        }
 
         private void Submit_Button_Click(object sender, RoutedEventArgs e)
         {
             if (!isUpdate)
             {
-                if (IsValid())
+                EmployeeModel model = Data();
+                if (mainWindows.IsValid(model))
                 {
-                    string start_Date = Day_Combo.Text + "-" + Month_Combo.Text + "-" + Year_Combo.Text;
-                    var selected_Departemnts = Department_List.Items.Cast<CheckBox>().Where(x => x.IsChecked == true).Select(x => x.Content).ToList();
-                    using (connection)
+                    try
                     {
-                        try
-                        {
-                            SqlCommand command = new SqlCommand("SPInsertEmployee", connection);
-                            command.CommandType = CommandType.StoredProcedure;
-
-                            connection.Open();
-
-                            command.Parameters.AddWithValue("@Name", Name_txt.Text);
-                            command.Parameters.AddWithValue("@Profile", profile_Link);
-                            command.Parameters.AddWithValue("@Gender", GenderMenu.Text);
-                            command.Parameters.AddWithValue("@Department", string.Join(",", selected_Departemnts));
-                            command.Parameters.AddWithValue("@Salary", Salary_Value.Text);
-                            command.Parameters.AddWithValue("@Start_Date", start_Date);
-                            command.Parameters.AddWithValue("@Notes", Notes_txt.Text);
-
-                            int addOrNot = command.ExecuteNonQuery();
-                            if (addOrNot >= 1)
-                            {
-                                MessageBox.Show("User Added Successfully", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
-                            }
-                            else
-                            {
-                                MessageBox.Show("User Name Already Exists!", "Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                            connection.Close();
-                            Clear();
-                            this.Close();
-                            Dashboard dashboard = new Dashboard();
-                            dashboard.LoadGrid();
-                            dashboard.Show();
-                        }
-                        catch (SqlException ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
+                        mainWindows.InsertEmployee(model);
+                        Clear();
+                        Dashboard dashboard = new Dashboard();
+                        this.Close();
+                        dashboard.LoadGrid();
+                        dashboard.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }
             }
             else
             {
-                if (IsValid())
+                EmployeeModel model = Data();
+                if (mainWindows.IsValid(model))
                 {
-                    string start_Date = Day_Combo.Text + "-" + Month_Combo.Text + "-" + Year_Combo.Text;
-                    var selected_Departemnts = Department_List.Items.Cast<CheckBox>().Where(x => x.IsChecked == true).Select(x => x.Content).ToList();
-                    using (connection)
+                    try
                     {
-                        try
-                        {
-                            SqlCommand command = new SqlCommand("SPUpdateEmployee", connection);
-                            command.CommandType = CommandType.StoredProcedure;
-
-                            connection.Open();
-                            command.Parameters.AddWithValue("@EmpID", EmpID);
-                            command.Parameters.AddWithValue("@Name", Name_txt.Text);
-                            command.Parameters.AddWithValue("@Profile", profile_Link);
-                            command.Parameters.AddWithValue("@Gender", GenderMenu.Text);
-                            command.Parameters.AddWithValue("@Department", string.Join(",", selected_Departemnts));
-                            command.Parameters.AddWithValue("@Salary", Salary_Value.Text);
-                            command.Parameters.AddWithValue("@Start_Date", start_Date);
-                            command.Parameters.AddWithValue("@Notes", Notes_txt.Text);
-
-                            command.ExecuteNonQuery();
-                            MessageBox.Show("Updated User Data Successfully", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                            connection.Close();
-
-                            Clear();
-                            this.Close();
-                            Dashboard dashboard = new Dashboard();
-                            dashboard.LoadGrid();
-                            dashboard.Show();
-                        }
-                        catch (SqlException ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
+                        mainWindows.UpdateEmployee(model);
+                        Clear();
+                        Dashboard dashboard = new Dashboard();
+                        this.Close();
+                        dashboard.LoadGrid();
+                        dashboard.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
                     }
                 }
             }
@@ -189,7 +117,8 @@ namespace Employee_Payroll
         }
         private void Radio_Checked(object sender, RoutedEventArgs e)
         {
-            profile_Link = (string)(sender as RadioButton).Content;
+
+            mainWindows.profile_Link = (string)(sender as RadioButton).Content;
         }
     }
 }
